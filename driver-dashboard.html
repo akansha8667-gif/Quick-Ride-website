@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quick Ride - Driver Dashboard</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(to right, #00c6ff, #0072ff);
+            margin: 0;
+            padding: 2rem;
+            min-height: 100vh;
+        }
+
+        h1 {
+            text-align: center;
+            color: #fff;
+            margin-bottom: 2rem;
+            text-shadow: 1px 1px 5px rgba(0,0,0,0.3);
+        }
+
+        .driver-info {
+            background: #fff;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            border-left: 6px solid #28a745;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .driver-info:hover {
+            transform: translateY(-3px);
+        }
+
+        .driver-info h2 {
+            margin: 0 0 0.5rem 0;
+            color: #28a745;
+        }
+
+        .driver-info p {
+            margin: 0;
+            font-size: 0.95rem;
+            color: #555;
+        }
+
+        #rides {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .ride {
+            background: #fff;
+            padding: 1.5rem;
+            border-radius: 12px;
+            border-left: 6px solid #007bff;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .ride:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+        }
+
+        .ride p {
+            margin: 0.3rem 0;
+        }
+
+        .status {
+            margin-top: 0.5rem;
+            font-weight: bold;
+            color: #555;
+        }
+
+        button {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            margin-top: 0.5rem;
+            margin-right: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        .accept-btn {
+            background: #28a745;
+            color: white;
+        }
+
+        .complete-btn {
+            background: #ff9800;
+            color: white;
+        }
+
+        /* Responsive */
+        @media(max-width: 480px){
+            body {
+                padding: 1rem;
+            }
+
+            .ride, .driver-info {
+                padding: 1rem;
+            }
+
+            button {
+                padding: 0.5rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Driver Dashboard</h1>
+
+    <!-- Driver Info -->
+    <div class="driver-info">
+        <h2>Driver: Anil Gautam</h2>
+        <p>Contact: +91 9876543210</p>
+    </div>
+
+    <div id="rides"></div>
+
+    <script>
+        function loadRides() {
+            const rides = JSON.parse(localStorage.getItem('rides') || '[]');
+            const container = document.getElementById('rides');
+
+            if (rides.length === 0) {
+                container.innerHTML = "<p style='color:white; text-align:center;'>No rides available.</p>";
+                return;
+            }
+
+            container.innerHTML = rides.map(ride => `
+                <div class="ride">
+                    <p><strong>Pickup:</strong> ${ride.pickup}</p>
+                    <p><strong>Drop-off:</strong> ${ride.dropoff}</p>
+                    <p><strong>Vehicle:</strong> ${ride.vehicle}</p>
+
+                    <div class="status">Status: ${ride.status || "Pending"}</div>
+
+                    <button class="accept-btn" onclick="acceptRide(${ride.id})">Accept</button>
+                    <button class="complete-btn" onclick="completeRide(${ride.id})">Complete</button>
+                </div>
+            `).join('');
+        }
+
+        function acceptRide(id) {
+            const rides = JSON.parse(localStorage.getItem('rides') || '[]');
+            const ride = rides.find(r => r.id === id);
+
+            if (!ride) return alert("Ride not found!");
+
+            ride.status = 'Accepted';
+            localStorage.setItem('rides', JSON.stringify(rides));
+            loadRides();
+        }
+
+        function completeRide(id) {
+            const rides = JSON.parse(localStorage.getItem('rides') || '[]');
+            const ride = rides.find(r => r.id === id);
+
+            if (!ride) return alert("Ride not found!");
+
+            ride.status = 'Completed';
+            localStorage.setItem('rides', JSON.stringify(rides));
+            loadRides();
+        }
+
+        loadRides();
+    </script>
+</body>
+</html>

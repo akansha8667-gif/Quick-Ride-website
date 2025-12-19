@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quick Ride - Ride History</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(to right, #00c6ff, #0072ff);
+            margin: 0;
+            padding: 2rem;
+            min-height: 100vh;
+        }
+
+        h1 {
+            text-align: center;
+            color: #fff;
+            margin-bottom: 2rem;
+            text-shadow: 1px 1px 5px rgba(0,0,0,0.3);
+        }
+
+        #history {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .ride {
+            background: #fff;
+            padding: 1.5rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .ride:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+
+        .ride p {
+            margin: 0.3rem 0;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .ride .pickup-name {
+            font-weight: bold;
+            color: #007bff;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #fff;
+            margin-left: 0.5rem;
+        }
+
+        .Pending { background: #ffc107; }
+        .Accepted { background: #17a2b8; }
+        .Completed { background: #28a745; }
+
+        @media(max-width: 480px){
+            #history {
+                padding: 0 0.5rem;
+            }
+            .ride {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Ride History</h1>
+    <div id="history"></div>
+    <script>
+        const rides = JSON.parse(localStorage.getItem('rides') || '[]');
+        const container = document.getElementById('history');
+
+        container.innerHTML = rides.map(ride => `
+            <div class="ride">
+                <p><strong>Passenger:</strong> <span class="pickup-name">${ride.name || "Unknown"}</span></p>
+                <p><strong>Pickup:</strong> ${ride.pickup}</p>
+                <p><strong>Drop-off:</strong> ${ride.dropoff}</p>
+                <p><strong>Status:</strong> <span class="status ${ride.status}">${ride.status}</span></p>
+            </div>
+        `).join('');
+    </script>
+</body>
+</html>

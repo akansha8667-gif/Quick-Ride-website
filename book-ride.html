@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quick Ride - Book a Ride</title>
+    <style>
+        /* Google Fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(to right, #00c6ff, #0072ff);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            color: #fff;
+            margin-bottom: 2rem;
+            font-size: 2rem;
+            text-shadow: 1px 1px 5px rgba(0,0,0,0.3);
+        }
+
+        form {
+            background: #fff;
+            padding: 2.5rem 2rem;
+            border-radius: 15px;
+            max-width: 400px;
+            width: 100%;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
+        }
+
+        form:hover {
+            transform: translateY(-5px);
+        }
+
+        input, select {
+            width: 100%;
+            padding: 0.75rem;
+            margin: 0.5rem 0 1rem 0;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        input:focus, select:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
+            outline: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 0.75rem;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+
+        button:hover {
+            background: #0056b3;
+            transform: scale(1.02);
+        }
+
+        #status {
+            margin-top: 1.5rem;
+            text-align: center;
+            font-weight: 500;
+            color: #28a745;
+            font-size: 1rem;
+            background: #d4edda;
+            padding: 0.75rem;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            display: none;
+        }
+
+        /* Responsive */
+        @media(max-width: 480px){
+            form {
+                padding: 2rem 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h1>Book a Ride</h1>
+        <form id="rideForm">
+            <input type="text" id="pickup" placeholder="Pickup Location" required>
+            <input type="text" id="dropoff" placeholder="Drop-off Location" required>
+            <select id="vehicle">
+                <option value="BULERO">Bulero</option>
+                <option value="ARTICA">Artica</option>
+                <option value="BRIZZA">Brizza</option>
+                <option value="BOLANO">Bolano</option>
+                <option value="BIKE">Bike</option>
+            </select>
+            <button type="submit">Request Ride</button>
+        </form>
+        <div id="status"></div>
+    </div>
+
+    <script>
+        document.getElementById('rideForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const pickup = document.getElementById('pickup').value;
+            const dropoff = document.getElementById('dropoff').value;
+            const vehicle = document.getElementById('vehicle').value;
+
+            setTimeout(() => {
+                const ride = { 
+                    id: Date.now(), 
+                    pickup, 
+                    dropoff, 
+                    vehicle, 
+                    status: 'matched', 
+                    driver: 'Anil Gautam' 
+                };
+                const rides = JSON.parse(localStorage.getItem('rides') || '[]');
+                rides.push(ride);
+                localStorage.setItem('rides', JSON.stringify(rides));
+
+                const statusDiv = document.getElementById('status');
+                statusDiv.style.display = 'block';
+                statusDiv.textContent = `Ride matched! Book ride with ${ride.driver}. Vehicle: ${ride.vehicle}. Proceed to payment.`;
+
+                setTimeout(() => window.location.href = 'payment.html', 2000);
+            }, 2000);
+        });
+    </script>
+</body>
+</html>
+
+            
