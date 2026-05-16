@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Book a Ride - Quick-Ride</title>
+</head>
+<body>
+    <h2>Book Your Ride</h2>
+    <form id="bookingForm">
+        <input type="text" name="pickup_location" placeholder="Pickup Location (e.g. Delhi)" required><br><br>
+        <input type="text" name="dropoff_location" placeholder="Dropoff Location (e.g. Noida)" required><br><br>
+        <button type="submit" style="padding:10px 20px; background:blue; color:white; border:none; cursor:pointer;">Confirm Booking</button>
+    </form>
+
+    <script>
+    document.getElementById('bookingForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        
+        try {
+            const res = await fetch('rides/book_ride.php', {
+                method: 'POST',
+                body: formData
+            });
+            const data = await res.json();
+            
+            if(data.success) {
+                alert("Ride Booked Successfully! Estimated Fare: ₹" + data.fare);
+                window.location.href = 'ride-history.html';
+            } else {
+                alert(data.message);
+            }
+        } catch (err) {
+            console.error("Connection Error:", err);
+            alert("Kuch galti hui hai. Check console.");
+        }
+    });
+    </script>
+</body>
+</html>
