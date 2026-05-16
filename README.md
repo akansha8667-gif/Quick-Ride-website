@@ -1,43 +1,25 @@
-# Quick Ride – Online Taxi Booking Website
+# Quick Ride 🚖
 
-## Project Description
-Quick Ride is a frontend-based online taxi booking website.
-It allows users to sign up, log in, book rides, make payments, and view ride history.
-
-## Features
-- User Login & Signup
-- Book a Taxi Ride
-- Driver Dashboard
-- Online Payment Page
-- Ride History
+A full stack ride booking web application.
 
 ## Tech Stack
 - HTML
 - CSS
 - JavaScript
+- PHP
+- MySQL
+- XAMPP
 
-## Live Demo
-https://akansha8667-gif.github.io/Quick-Ride-website/
+## Features
+- User Authentication
+- Ride Booking
+- Ride History
+- Payment Integration
+- Driver Dashboard
 
-## How to Run Locally
-1. Clone the repository
-2. Open `index.html` in any web browser
+## Database Setup
+Import `database/quickride.sql` into phpMyAdmin.
 
-## Project Structure
-- index.html – Home page
-- login.html – User login page
-- signup.html – User registration page
-- book-ride.html – Ride booking page
-- driver-dashboard.html – Driver dashboard
-- payment.html – Payment page
-- ride-history.html – User ride history
-- profile.html – User profile page
+## Run Project
+http://localhost/Quick-Ride
 
-## Future Improvements
-- Backend integration
-- Real-time ride tracking
-- Database support
-- Authentication & authorization
-
-## Author
-Akansha Garg
